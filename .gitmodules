@@ -1,3 +1,0 @@
-[submodule "gcp-data-catalog-terraform"]
-	path = gcp-data-catalog-terraform
-	url = https://github.com/dianaTahchieva/gcp-data-catalog-terraform.git
