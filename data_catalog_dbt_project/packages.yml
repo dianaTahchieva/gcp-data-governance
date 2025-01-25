@@ -1,0 +1,6 @@
+packages:
+  - package: dbt-labs/codegen
+    version: [">=0.11.0", "<1.0.0"]
+#  - git: "https://{{ env_var('GIT_TOKEN_NAME') }}:{{ env_var('DBT_ENV_SECRET_GIT_TOKEN') }}@gitlab.sanet17.ch/data-management/data-platform/dbt-utils-sanitas.git" # git URL
+#    revision: develop # tag or branch name
+#    warn-unpinned: false
