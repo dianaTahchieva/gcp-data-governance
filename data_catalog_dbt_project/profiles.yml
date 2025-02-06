@@ -10,5 +10,5 @@ data_catalog_dbt:
       dataset: your_bigquery_dataset # Replace with your BigQuery dataset name
       location: europe-west6 # Or your BigQuery location
       threads: 6
-  
+
       

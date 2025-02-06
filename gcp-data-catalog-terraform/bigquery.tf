@@ -1,11 +1,10 @@
-# Create a BigQuery Dataset
 resource "google_bigquery_dataset" "multiplexer_dataset" {
   dataset_id = "multiplexer_dataset"
   project    = var.project_id
   location   = var.region
+  deletion_protection = false # Allow deletion for easier testing
 }
 
-# Create a BigQuery Table with Policy Tags
 resource "google_bigquery_table" "customers_table" {
   dataset_id = google_bigquery_dataset.multiplexer_dataset.dataset_id
   table_id   = "customers_table"
@@ -17,29 +16,21 @@ resource "google_bigquery_table" "customers_table" {
     "name": "customer_id",
     "type": "STRING",
     "mode": "REQUIRED",
-    "description": "Unique customer identifier",
-    "policyTags": {
-      "names": ["${google_data_catalog_policy_tag.non_pii_sensitive.id}"]
-    }
+    "description": "Unique customer identifier"
   },
   {
     "name": "email",
     "type": "STRING",
     "mode": "NULLABLE",
-    "description": "Customer email",
-    "policyTags": {
-      "names": ["${google_data_catalog_policy_tag.pii_sensitive.id}"]
-    }
+    "description": "Customer email"
   },
   {
     "name": "phone_number",
     "type": "STRING",
     "mode": "NULLABLE",
-    "description": "Customer phone number",
-    "policyTags": {
-      "names": ["${google_data_catalog_policy_tag.pii_sensitive.id}"]
-    }
+    "description": "Customer phone number"
   }
 ]
 EOT
 }
+

@@ -1,17 +1,13 @@
-name: 'data_catalog_dbt'  
+name: 'data_catalog_dbt'
 version: '1.0.0'
 config-version: 2
-require-dbt-version: ">=1.7.0" # Or a more specific version if needed
-profile: 'data_catalog_dbt' # Replace with your GCP profile name
-
-
-model-paths: ["models"] # Keep this, it's where your models will be
-
+require-dbt-version: ">=1.7.0"
+profile: 'data_catalog_dbt'
+model-paths: ["models"]
 clean-targets:
   - "target"
   - "dbt_packages"
 
-# This section is optional, only include if you want to specify default settings for models.
-# models:
-#   data_catalog_dbt: # this should match your project name
-#     +materialized: table # or 'view' as needed
+vars:
+  pii_sensitive_policy_tag_id: "{{ env_var('PII_SENSITIVE_POLICY_TAG_ID') }}" # Or use a different method to get the ID from Terraform output
+  non_pii_sensitive_policy_tag_id: "{{ env_var('NON_PII_SENSITIVE_POLICY_TAG_ID') }}" # Or use a different method to get the ID from Terraform output
