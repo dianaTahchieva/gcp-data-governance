@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: multiplexer_source
+    database: "{{ env_var('PROJECT_ID') }}"  # Ensure this is correctly set in your dbt profile
+    schema: multiplexer_dataset  # Use the dataset name from Terraform output
+    tables:
+      - name: customers_table
+        description: "Customers table created via Terraform"

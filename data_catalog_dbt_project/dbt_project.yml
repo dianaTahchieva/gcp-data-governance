@@ -11,3 +11,4 @@ clean-targets:
 vars:
   pii_sensitive_policy_tag_id: "{{ env_var('PII_SENSITIVE_POLICY_TAG_ID') }}" # Or use a different method to get the ID from Terraform output
   non_pii_sensitive_policy_tag_id: "{{ env_var('NON_PII_SENSITIVE_POLICY_TAG_ID') }}" # Or use a different method to get the ID from Terraform output
+

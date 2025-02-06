@@ -4,4 +4,4 @@ SELECT
     customer_id,
     email,
     phone_number
-FROM {{ ref('customers_table') }}
+FROM {{ source('multiplexer_source', 'customers_table') }}
