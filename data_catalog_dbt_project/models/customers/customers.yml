@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: customers
+    description: "Customers data with PII"
+    meta:
+      contains_pii: true
+    columns:
+      - name: customer_id
+        description: "Unique customer identifier"
+        policy_tags:
+          - "{{ var('non_pii_sensitive_policy_tag_id') }}"
+      - name: email
+        description: "Customer email"
+        policy_tags:
+          - "{{ var('pii_sensitive_policy_tag_id') }}"
+      - name: phone_number
+        description: "Customer phone number"
+        policy_tags:
+          - "{{ var('pii_sensitive_policy_tag_id') }}"
