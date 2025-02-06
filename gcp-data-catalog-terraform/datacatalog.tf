@@ -42,4 +42,3 @@ resource "google_data_catalog_policy_tag" "non_pii_sensitive" {
   display_name = "Non-PII"
   description  = "Policy tag for non-sensitive data"
 }
-

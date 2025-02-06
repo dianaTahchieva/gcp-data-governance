@@ -1,14 +1,14 @@
 resource "google_bigquery_dataset" "multiplexer_dataset" {
   dataset_id = "multiplexer_dataset"
   project    = var.project_id
-  location   = var.region
-  deletion_protection = false # Allow deletion for easier testing
+  location   = var.region  
 }
 
 resource "google_bigquery_table" "customers_table" {
   dataset_id = google_bigquery_dataset.multiplexer_dataset.dataset_id
   table_id   = "customers_table"
   project    = var.project_id
+  deletion_protection = false
 
   schema = <<EOT
 [
@@ -33,4 +33,3 @@ resource "google_bigquery_table" "customers_table" {
 ]
 EOT
 }
-

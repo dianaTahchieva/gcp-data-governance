@@ -1,11 +1,45 @@
-# Apply a default masking policy to the dataset (optional, dataset-level policy)
-resource "google_bigquery_datapolicy" "default_masking_policy" {
+# Apply policy tags to the Customers Table
+resource "google_bigquery_table" "customers_table_with_policies" {
   dataset_id = google_bigquery_dataset.multiplexer_dataset.dataset_id
+  table_id   = "customers_table_with_policies"
   project    = var.project_id
-  location   = var.region
-  data_policy_id = "default_masking"
-  data_policy_type = "DATA_MASKING_POLICY"
-  data_masking_policy {
-    predefined_expression = "DEFAULT_MASKING_VALUE"
+  deletion_protection = false
+
+  schema = <<EOT
+[
+  {
+    "name": "customer_id",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "Unique customer identifier",
+    "policyTags": {
+      "names": ["${google_data_catalog_policy_tag.non_pii_sensitive.name}"]
+    }
+  },
+  {
+    "name": "email",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Customer email",
+    "policyTags": {
+      "names": ["${google_data_catalog_policy_tag.pii_sensitive.name}"]
+    }
+  },
+  {
+    "name": "phone_number",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Customer phone number",
+    "policyTags": {
+      "names": ["${google_data_catalog_policy_tag.pii_sensitive.name}"]
+    }
   }
+]
+EOT
+
+  # Ensure the policy tag configuration is applied after the tags are created
+  depends_on = [
+    google_data_catalog_policy_tag.pii_sensitive,
+    google_data_catalog_policy_tag.non_pii_sensitive
+  ]
 }

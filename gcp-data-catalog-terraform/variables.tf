@@ -1,7 +1,8 @@
 variable "project_id" {
-  default = "your_project_id"
+  default = "gcp-data-governance"
 }
 
 variable "region" {
-  default = "us-central1"
+  type    = string
+  default = "europe-west6"
 }

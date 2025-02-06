@@ -4,11 +4,10 @@ data_catalog_dbt:
     dev:
       type: bigquery
       method: service-account
-      #keyfile: "/path/to/your/service_account_key.json" # Replace with the actual path to your service account key file 
-      keyfile: "{{ env_var('DEV_DATA_CATALOG_KEY') }}" # or you can use a git variable, which you need to initi
-      project: your-gcp-project-id  # Replace with your GCP project ID
-      dataset: your_bigquery_dataset # Replace with your BigQuery dataset name
+      keyfile: "gcp-data-catalog-terraform/terraform-sa-key.json" # Replace with the actual path to your service account key file 
+      #keyfile: "{{ env_var('DEV_DATA_CATALOG_KEY') }}" # or you can use a git variable, which you need to initi
+      project: gcp-data-governance  # Replace with your GCP project ID
+      dataset: multiplexer_dataset # Replace with your BigQuery dataset name
       location: europe-west6 # Or your BigQuery location
       threads: 6
-
-      
+  
