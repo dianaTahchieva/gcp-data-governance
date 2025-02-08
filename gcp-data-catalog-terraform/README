@@ -1,135 +1,118 @@
-gcp-data-catalog-terraform
-This project demonstrates how to automate the creation and management of a Data Catalog and BigQuery resources on Google Cloud Platform (GCP) using Terraform. The goal of this project is to streamline the process of setting up and managing your data catalog, datasets, and tables, ensuring that your data is well-organized and easy to access.
+# gcp-data-catalog-terraform
 
-Table of Contents
-Overview
-Features
-Prerequisites
-Setup Instructions
-Project Structure
-Usage
-Potential Issues & Solutions
-License
-Overview
+This project automates the creation and management of Data Catalog and BigQuery resources on Google Cloud Platform (GCP) using Terraform. The goal is to streamline the setup and management of your data catalog, datasets, and tables, ensuring data is well-organized and easily accessible.
+
+## Table of Contents
+- Overview
+- Features
+- Prerequisites
+- Setup Instructions
+- Project Structure
+- Usage
+- Potential Issues & Solutions
+- License
+
+## Overview
 This repository contains Terraform code to:
+- Create a Google BigQuery dataset for storing and managing data.
+- Define BigQuery tables with configurations and data structures.
+- Set up Google Cloud Data Catalog to organize and classify data using taxonomies and policy tags.
+- Automate service account creation with appropriate IAM roles for seamless data access.
 
-Create a Google BigQuery dataset to store and manage your data.
-Define BigQuery tables with configurations and data structure.
-Set up Google Cloud Data Catalog for organizing and classifying your data using taxonomies and policy tags.
-Automate the creation of service accounts with proper IAM roles for seamless data access.
-By using Terraform, this project helps automate the entire process, ensuring that your data environment is reproducible and manageable with version control.
+By leveraging Terraform, this project automates the entire process, making your data environment reproducible and manageable with version control.
 
-Features
-Google BigQuery Dataset and Tables: Create and manage BigQuery datasets and tables.
-Data Catalog Taxonomy: Automate the creation of taxonomies and policy tags in Google Cloud Data Catalog.
-Service Accounts: Create service accounts with specific IAM roles for access to BigQuery and Data Catalog.
-Terraform Automation: Easily create, modify, and manage your GCP resources using Terraform.
-Prerequisites
-Before using this repository, make sure you have the following:
+## Features
+- **BigQuery Dataset and Tables:** Automates the creation and management of BigQuery datasets and tables.
+- **Data Catalog Taxonomy:** Streamlines the creation of taxonomies and policy tags in Google Cloud Data Catalog.
+- **Service Accounts & IAM:** Sets up service accounts with specific IAM roles for controlled access.
+- **Terraform Automation:** Simplifies the management and deployment of GCP resources.
 
-Google Cloud Platform (GCP) account: You will need a GCP account with access to the appropriate projects.
+## Prerequisites
+Before using this repository, ensure you have the following:
 
-Terraform: Ensure Terraform is installed. You can follow the official installation guide to install it on your local machine.
+- **Google Cloud Platform (GCP) account:** A GCP account with project access.
+- **Terraform:** Install Terraform by following the [official installation guide](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli).
+- **GCP Project Setup:** Ensure your project has the necessary APIs enabled:
+  - BigQuery API
+  - Data Catalog API
+  - Billing API (ensure billing is enabled)
+- **Google Cloud SDK:** Install the Google Cloud SDK for authentication and interaction with GCP.
 
-GCP Project Setup: Make sure you have a GCP project with the necessary APIs enabled:
-
-BigQuery API
-Data Catalog API
-Billing API (ensure billing is enabled for the project)
-Google Cloud SDK: Install the Google Cloud SDK to interact with your GCP account via gcloud commands. This is important for authenticating Terraform to your GCP account.
-
-Setup Instructions
-Follow these steps to set up the project:
-
-1. Clone the Repository
-Clone the repository to your local machine using the following command:
-
-bash
-Code kopieren
+## Setup Instructions
+### 1. Clone the Repository
+Clone this repository to your local machine:
+```bash
 git clone https://github.com/dianaTahchieva/gcp-data-catalog-terraform.git
 cd gcp-data-catalog-terraform
-2. Authenticate with Google Cloud
-Authenticate Terraform with your Google Cloud account using the following command:
+```
 
-bash
-Code kopieren
+### 2. Authenticate with Google Cloud
+Authenticate Terraform with your Google Cloud account:
+```bash
 gcloud auth application-default login
-This will authenticate Terraform to your Google Cloud account. Make sure the account has sufficient permissions to create the resources in the project.
+```
+Ensure your account has the necessary permissions to create resources.
 
-3. Initialize Terraform
+### 3. Initialize Terraform
 Run the following command to initialize the Terraform working directory:
-
-bash
-Code kopieren
+```bash
 terraform init
-This will download the necessary provider plugins and set up the working directory for Terraform.
+```
+This downloads necessary provider plugins and sets up the working directory.
 
-4. Configure Terraform Variables
-In the variables.tf file, set the values for the following variables:
-
-project_id: Your GCP project ID where resources will be created.
-region: The GCP region where your resources will be created (e.g., us-central1).
-For example:
-
-
+### 4. Configure Terraform Variables
+Edit the `variables.tf` file and set the following values:
+```hcl
 variable "project_id" {
   default = "your-gcp-project-id"
 }
 
 variable "region" {
-  default = "us-central1"
+  default = "europe-west6"
 }
+```
+Alternatively, you can configure these variables directly in your terminal when running `terraform apply`.
 
-
-You can also configure these variables directly in your terminal by running the terraform apply command and following the prompts.
-
-5. Apply Terraform Plan
-Once you've set up your configuration, apply the Terraform plan:
-
-
+### 5. Apply Terraform Plan
+Run the following command to apply the Terraform plan:
+```bash
 terraform apply
+```
+Review the proposed changes and confirm by typing `yes`. Terraform will then create the necessary BigQuery datasets, tables, policy tags, service accounts, and IAM roles.
 
-
-Review the proposed changes and confirm by typing yes when prompted. Terraform will then create the BigQuery dataset, tables, and Data Catalog taxonomy, as well as the necessary service accounts and IAM roles.
-
-Project Structure
-The project is organized as follows:
-
-
+## Project Structure
+The repository is organized as follows:
+```
 gcp-data-catalog-terraform/
-├── variables.tf       # Terraform variables file
-├── outputs.tf         # Outputs from Terraform (e.g., dataset, table IDs)
+├── variables.tf       # Terraform variables
+├── outputs.tf         # Outputs (dataset, table IDs)
 ├── bigquery.tf        # BigQuery dataset and table creation
-├── datacatalog.tf     # Data Catalog taxonomy and policy tags creation
-└── iam.tf             # Service account and IAM roles configuration
+├── bigquery_policy.tf # Applies policy tags to BigQuery tables
+├── datacatalog.tf     # Data Catalog taxonomy and policy tags
+└── iam.tf             # Service accounts and IAM roles configuration
+```
 
+## Usage
+After applying the Terraform plan, you can:
+- **Query data in BigQuery:** Access and analyze your data.
+- **Manage metadata in Data Catalog:** Organize, classify, and enforce data governance policies.
 
-variables.tf: Defines the variables that can be customized by the user (e.g., project ID, region).
-outputs.tf: Outputs the IDs of created resources like BigQuery dataset and table.
-bigquery.tf: Contains the Terraform resources for creating BigQuery datasets and tables.
-datacatalog.tf: Defines resources for Google Cloud Data Catalog, including taxonomies and policy tags.
-iam.tf: Configures service accounts and IAM roles for required access permissions.
+## Potential Issues & Solutions
+### Billing Disabled Error
+If you receive a `BILLING_DISABLED` error, enable billing for your project via the [GCP Billing Console](https://console.cloud.google.com/billing).
 
+### API Not Enabled Error
+If you receive a `SERVICE_DISABLED` error for Data Catalog or BigQuery, enable the required APIs in the [GCP API Library](https://console.cloud.google.com/apis/library).
 
-Usage
-Once Terraform has applied the plan and created the necessary resources, you can start interacting with the data catalog, BigQuery datasets, and tables directly in the GCP console.
+### Permission Issues
+Ensure your account has sufficient permissions, including:
+- `roles/bigquery.admin`
+- `roles/datacatalog.admin`
+- `roles/iam.serviceAccountAdmin`
 
-BigQuery: You can now query and analyze your data stored in the BigQuery tables.
-Data Catalog: The data catalog will help you organize, classify, and apply governance to your data assets.
+### Terraform Initialization Issues
+If `terraform init` fails, try running it again with a stable internet connection and verify provider configurations.
 
-Potential Issues & Solutions
-Billing Disabled Error:
-If you encounter the error BILLING_DISABLED, it means that billing is not enabled for your GCP project. Visit the billing page to enable billing.
-
-API Not Enabled Error:
-If you receive a SERVICE_DISABLED error for Data Catalog or BigQuery, you must enable the respective APIs for your project. You can do this by visiting the API library and enabling the required APIs.
-
-Permission Issues:
-Ensure your GCP account has sufficient permissions to create and manage the resources. This includes roles like roles/bigquery.admin, roles/datacatalog.admin, and roles/iam.serviceAccountAdmin.
-
-Terraform Initialization Issues:
-If Terraform fails to initialize, try running terraform init again. Ensure your internet connection is stable, and that there are no issues with your provider configuration.
-
-License
-This project is licensed under the MIT License - see the LICENSE file for details.
+## License
+This project is licensed under the MIT License. See the `LICENSE` file for details.
 
