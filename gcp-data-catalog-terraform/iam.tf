@@ -8,7 +8,7 @@
 resource "google_project_iam_member" "terraform_bigquery_admin" {
   project = var.project_id
   role    = "roles/bigquery.admin"
-  member  =  "serviceAccount:terraform-sa@gcp-data-governance.iam.gserviceaccount.com" #"user:YOUR_EMAIL@example.com" # Replace with your user or Terraform SA
+  member  =  "serviceAccount:terraform-sa@gcp-data-governance.iam.gserviceaccount.com" 
 }
 
 resource "google_project_iam_member" "terraform_datacatalog_admin" {
@@ -28,4 +28,3 @@ resource "google_project_iam_member" "terraform_sa_admin" {
   role    = "roles/iam.serviceAccountAdmin"
   member  = "serviceAccount:terraform-sa@gcp-data-governance.iam.gserviceaccount.com"
 }
-
