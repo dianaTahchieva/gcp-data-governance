@@ -1,31 +1,44 @@
-# gcp-data-catalog-terraform
+# gcp-data-governance
 
-This project automates the creation and management of Data Catalog and BigQuery resources on Google Cloud Platform (GCP) using Terraform. The goal is to streamline the setup and management of your data catalog, datasets, and tables, ensuring data is well-organized and easily accessible.
+This project automates the creation and management of Data Catalog and BigQuery resources on Google Cloud Platform (GCP) using Terraform and dbt. The goal is to streamline the setup and management of your data catalog, datasets, and tables, ensuring data is well-organized, easily accessible, and governed by robust data policies.
 
 ## Table of Contents
-- Overview
-- Features
-- Prerequisites
-- Setup Instructions
-- Project Structure
-- Usage
-- Potential Issues & Solutions
-- License
+- [Overview](#overview)
+- [Features](#features)
+- [Prerequisites](#prerequisites)
+- [Setup Instructions](#setup-instructions)
+- [Project Structure](#project-structure)
+  - [Terraform Project](#terraform-project)
+  - [dbt Project](#dbt-project)
+- [Usage](#usage)
+  - [Running dbt Commands](#running-dbt-commands)
+- [Potential Issues & Solutions](#potential-issues--solutions)
+- [Resources](#resources)
+- [License](#license)
 
 ## Overview
-This repository contains Terraform code to:
-- Create a Google BigQuery dataset for storing and managing data.
-- Define BigQuery tables with configurations and data structures.
-- Set up Google Cloud Data Catalog to organize and classify data using taxonomies and policy tags.
-- Automate service account creation with appropriate IAM roles for seamless data access.
+This repository contains:
+- **Terraform code** to:
+  - Create a Google BigQuery dataset for storing and managing data.
+  - Define BigQuery tables with configurations and data structures.
+  - Set up Google Cloud Data Catalog to organize and classify data using taxonomies and policy tags.
+  - Automate service account creation with appropriate IAM roles for seamless data access.
+- **dbt code** to:
+  - Transform data in BigQuery.
+  - Apply Policy Tags to BigQuery columns during data transformation.
 
-By leveraging Terraform, this project automates the entire process, making your data environment reproducible and manageable with version control.
+By leveraging Terraform and dbt, this project automates the entire process, making your data environment reproducible and manageable with version control.
+
+### Read More
+For a detailed step-by-step guide, check out the accompanying [blog post](https://dev.to/ipt) on implementing BigQuery Policy Tags with Terraform and dbt.
+
 
 ## Features
 - **BigQuery Dataset and Tables:** Automates the creation and management of BigQuery datasets and tables.
 - **Data Catalog Taxonomy:** Streamlines the creation of taxonomies and policy tags in Google Cloud Data Catalog.
 - **Service Accounts & IAM:** Sets up service accounts with specific IAM roles for controlled access.
 - **Terraform Automation:** Simplifies the management and deployment of GCP resources.
+- **dbt Integration:** Transforms and models data in BigQuery, applying Policy Tags for data governance.
 
 ## Prerequisites
 Before using this repository, ensure you have the following:
@@ -37,6 +50,9 @@ Before using this repository, ensure you have the following:
   - Data Catalog API
   - Billing API (ensure billing is enabled)
 - **Google Cloud SDK:** Install the Google Cloud SDK for authentication and interaction with GCP.
+- **dbt:** Install dbt by following the [official installation guide](https://docs.getdbt.com/docs/installation).
+- **Python:** Install Python for managing dbt dependencies.
+
 
 ## Setup Instructions
 ### 1. Clone the Repository
@@ -92,10 +108,33 @@ gcp-data-catalog-terraform/
 └── iam.tf             # Service accounts and IAM roles configuration
 ```
 
+### dbt Project
+The dbt project contains the necessary configurations and models:
+data_catalog_dbt_project/
+├── dbt_project.yml    # Main configuration file for dbt project
+├── profiles.yml       # Connection details for dbt
+└── models/
+    └── customers/
+        ├── customers.sql  # SQL file for transforming customer data
+        └── customers.yml  # YAML file for metadata and policy tags
+
 ## Usage
 After applying the Terraform plan, you can:
 - **Query data in BigQuery:** Access and analyze your data.
 - **Manage metadata in Data Catalog:** Organize, classify, and enforce data governance policies.
+- **Run dbt transformations:** Apply policy tags to BigQuery columns through dbt models.
+
+## Running dbt Commands
+Ensure your environment variables are set:
+```bash
+export GOOGLE_APPLICATION_CREDENTIALS="/path/to/terraform-sa-key.json"
+```
+Run dbt commands:
+```bash
+dbt deps --upgrade
+dbt debug
+dbt run -s customers
+```
 
 ## Potential Issues & Solutions
 ### Billing Disabled Error
