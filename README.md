@@ -13,7 +13,6 @@ This project automates the creation and management of Data Catalog and BigQuery 
 - [Usage](#usage)
   - [Running dbt Commands](#running-dbt-commands)
 - [Potential Issues & Solutions](#potential-issues--solutions)
-- [Resources](#resources)
 - [License](#license)
 
 ## Overview
@@ -76,20 +75,7 @@ terraform init
 ```
 This downloads necessary provider plugins and sets up the working directory.
 
-### 4. Configure Terraform Variables
-Edit the `variables.tf` file and set the following values:
-```hcl
-variable "project_id" {
-  default = "your-gcp-project-id"
-}
-
-variable "region" {
-  default = "europe-west6"
-}
-```
-Alternatively, you can configure these variables directly in your terminal when running `terraform apply`.
-
-### 5. Apply Terraform Plan
+### 4. Apply Terraform Plan
 Run the following command to apply the Terraform plan:
 ```bash
 terraform apply
@@ -97,19 +83,20 @@ terraform apply
 Review the proposed changes and confirm by typing `yes`. Terraform will then create the necessary BigQuery datasets, tables, policy tags, service accounts, and IAM roles.
 
 ## Project Structure
+### Terraform Project
 The repository is organized as follows:
 ```
 gcp-data-catalog-terraform/
 ├── variables.tf       # Terraform variables
 ├── outputs.tf         # Outputs (dataset, table IDs)
 ├── bigquery.tf        # BigQuery dataset and table creation
-├── bigquery_policy.tf # Applies policy tags to BigQuery tables
 ├── datacatalog.tf     # Data Catalog taxonomy and policy tags
 └── iam.tf             # Service accounts and IAM roles configuration
 ```
 
 ### dbt Project
 The dbt project contains the necessary configurations and models:
+```
 data_catalog_dbt_project/
 ├── dbt_project.yml    # Main configuration file for dbt project
 ├── profiles.yml       # Connection details for dbt
@@ -117,6 +104,7 @@ data_catalog_dbt_project/
     └── customers/
         ├── customers.sql  # SQL file for transforming customer data
         └── customers.yml  # YAML file for metadata and policy tags
+```
 
 ## Usage
 After applying the Terraform plan, you can:
@@ -125,10 +113,6 @@ After applying the Terraform plan, you can:
 - **Run dbt transformations:** Apply policy tags to BigQuery columns through dbt models.
 
 ## Running dbt Commands
-Ensure your environment variables are set:
-```bash
-export GOOGLE_APPLICATION_CREDENTIALS="/path/to/terraform-sa-key.json"
-```
 Run dbt commands:
 ```bash
 dbt deps --upgrade

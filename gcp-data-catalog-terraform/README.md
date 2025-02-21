@@ -10,7 +10,6 @@ This sub-project contains Terraform configurations for setting up the necessary 
 - **iam.tf:** Creates service accounts for Terraform and dbt, assigning necessary IAM roles.
 - **datacatalog.tf:** Defines the taxonomy for organizing Policy Tags and creates tags for PII and non-PII data.
 - **bigquery.tf:** Creates a BigQuery dataset and a table without predefined policy tags.
-- **bigquery_policy.tf:** Applies Policy Tags to the Customers table.
 - **output.tf:** Outputs IDs for easy access to created resources.
 - **enable_apis.tf:** Enables necessary Google Cloud APIs.
 
