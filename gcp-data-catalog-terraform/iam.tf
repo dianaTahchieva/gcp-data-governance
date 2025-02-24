@@ -1,7 +1,9 @@
-#Run this command to create zour service account:
+#Run these commands to create your service accounts:
 #gcloud iam service-accounts create terraform-sa --display-name "Terraform Service Account" --project gcp-data-governance
-#Run this command to get the email of your newly created service account:
+#gcloud iam service-accounts create dbt-sa --display-name "dbt Service Account" --project gcp-data-governance
+#Run these commands to get the email of your newly created service accounts:
 #gcloud iam service-accounts list --filter="displayName:Terraform Service Account" --format="value(email)"
+#gcloud iam service-accounts list --filter="displayName:dbt Service Account" --format="value(email)"
 
 
 # Give the Terraform user permissions to manage IAM, Dataplex, and BigQuery

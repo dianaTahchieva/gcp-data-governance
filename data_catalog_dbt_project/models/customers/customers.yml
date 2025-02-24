@@ -4,7 +4,6 @@ models:
   - name: customers
     description: "Customers data with PII"
     meta:
-      contains_pii: true
     columns:
       - name: customer_id
         description: "Unique customer identifier"
