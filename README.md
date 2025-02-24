@@ -29,7 +29,7 @@ This repository contains:
 By leveraging Terraform and dbt, this project automates the entire process, making your data environment reproducible and manageable with version control.
 
 ### Read More
-For a detailed step-by-step guide, check out the accompanying [blog post](https://dev.to/ipt) on implementing BigQuery Policy Tags with Terraform and dbt.
+For a detailed step-by-step guide, check out the accompanying [blog post](https://dev.to/ipt/data-governance-with-dbt-terraform-and-dataplex-a-practical-guide-to-bigquery-policy-tags-5f7d) on implementing BigQuery Policy Tags with Terraform and dbt.
 
 
 ## Features
